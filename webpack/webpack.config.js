@@ -1,6 +1,13 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
+// Загружаем переменные окружения
+require('dotenv').config();
+
+const IS_PRODE = process.env.IS_PRODE;
+console.log('Environment variables:', process.env.YAY, process.env.IS_PRODE);
 module.exports = {
   mode: 'development',
   entry: {
@@ -13,30 +20,35 @@ module.exports = {
   },
   module: {
     rules: [
-      /* {
-        test: /\.(js|jsx)$/,
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
-        use: [
-          'thread-loader',
-          {
-            loader: 'babel-loader',
-            options: {
-              plugins: [
-                process.env.NODE_ENV === 'development' && require.resolve('react-refresh/babel'),
-              ].filter(Boolean),
-            },
-          },
-        ],
-      }, */
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
+      },
+      {
+        test: /\.(scss|css)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
   devtool: 'inline-source-map',
   plugins: [
+    new Dotenv({
+      path: path.resolve(__dirname, './.env')
+    }),
+    new webpack.DefinePlugin({
+      'process.env.YAY': JSON.stringify(process.env.YAY),
+      'process.env.IS_PRODE': JSON.stringify(process.env.IS_PRODE),
+    }),
     new HtmlWebpackPlugin({
       title: 'Development',
       filename: 'index.html',
@@ -45,7 +57,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
   },
   devServer: {
     static: {
