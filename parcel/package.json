@@ -1,0 +1,27 @@
+{
+  "name": "parcel",
+  "version": "1.0.0",
+  "source": "src/index.html",
+  "scripts": {
+    "flow": "flow",
+    "start": "parcel",
+    "build": "parcel build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@babel/cli": "^7.27.2",
+    "@babel/core": "^7.27.4",
+    "@babel/preset-flow": "^7.27.1",
+    "@parcel/transformer-babel": "^2.15.2",
+    "babel-plugin-syntax-hermes-parser": "^0.28.1",
+    "flow-bin": "^0.272.2",
+    "parcel": "^2.15.2"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
